@@ -1,0 +1,30 @@
+name: Setup help
+description: Ask for help running the local client/server/database stack.
+title: "[Setup]: "
+labels:
+  - setup
+body:
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: I read README.md
+        - label: I read docs/DATABASE_SETUP.md
+        - label: I ran scripts/verify-public-release.ps1
+        - label: I checked whether ports 3306, 2001, and 3001 are already in use
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is blocked?
+      description: Describe the setup step that fails.
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Command output
+      description: Paste the exact command output. Do not include private passwords.
+      render: text
+    validations:
+      required: false

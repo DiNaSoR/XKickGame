@@ -1,0 +1,6 @@
+<?
+	header( "content-type:text/html;charset=utf-8");
+	include "./comm_inc/topmenu.inc";
+	include "./contents.inc";
+	include "./comm_inc/bottom.inc";
+?>

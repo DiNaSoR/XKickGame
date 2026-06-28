@@ -1,0 +1,54 @@
+#!/bin/bash
+
+mode=$1
+
+case "$mode" in
+        'ps')
+		ps -ef |grep XKICK
+                ;;
+        'copy')
+                cp ~/XKICK_Certify ~/certify/XKICK_Certify
+                cp ~/XKICK_Game ~/game1/XKICK_Game1
+                cp ~/XKICK_Game ~/game2/XKICK_Game2
+                cp ~/XKICK_Game ~/game3/XKICK_Game3
+                chmod 755 /home/xkick/certify/XKICK_Certify
+                chmod 755 /home/xkick/game1/XKICK_Game1
+                chmod 755 /home/xkick/game2/XKICK_Game2
+                chmod 755 /home/xkick/game3/XKICK_Game3
+                ;;
+        'start')
+		$0 copy
+                cd /home/xkick/certify
+                ./XKICK_Certify &
+                cd /home/xkick/game1
+                ./XKICK_Game1 &
+                ;;
+        'stop')
+                killall XKICK_Certify
+                killall XKICK_Game
+                killall XKICK_Game1
+                killall XKICK_Game2
+                killall XKICK_Game3
+                ;;
+	'dir')
+                mkdir certify
+                mkdir game1
+                mkdir game2
+                mkdir game3
+                mkdir Log 
+                mkdir Log/DATABASE
+                mkdir Log/PACKET
+                mkdir Log/ERROR
+                mkdir Log/OPERATE
+                ;;
+        'restart')
+                $0 stop
+                sleep 5
+                $0 update
+                $0 start
+                ;;
+        *)
+                echo "Usage: $0 start|stop|update|restart"
+                exit 1
+                ;;
+esac

@@ -1,0 +1,14 @@
+* text=auto
+
+*.bin binary
+*.dll binary
+*.exe binary
+*.pak binary
+*.ttd binary
+*.wav binary
+*.xls binary
+*.png binary
+*.tar binary
+
+server/runtime/legacy-home/XKICK_* binary
+server/runtime/legacy-home/**/XKICK_* binary

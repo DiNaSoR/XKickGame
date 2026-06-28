@@ -1,0 +1,110 @@
+body
+{
+    background-color : #353535;
+    color: #A1A1A1;
+	FONT-FAMILY:Tahoma;
+    FONT-SIZE: 9pt;
+	letter-spacing :-0.2pt;
+	padding-bottom : 0pt;
+	top-margin: 0pt;
+    left-margin :0pt;
+	scrollbar-arrow-color: #000000;
+	scrollbar-3dlight-color: #3A3A3A;
+	scrollbar-highlight-color: #000000;
+	scrollbar-face-color: #3A3A3A;
+	scrollbar-shadow-color: #000000;
+	scrollbar-darkshadow-color: #3A3A3A;
+	scrollbar-track-color: #414141;	
+}
+	input {border-width:1pt; border-color:#5B5B5B; font-family:Tahoma; font-size:9pt; color:#04CEAF; background-color:#000000 }
+	input.check {font-size:9pt; background-color:#392C31 }
+	input.check2 {font-size:9pt; background-color:#3A3A3A }
+	select {border-width:1pt; border-color:#000000; font-family:Tahoma; font-size:9pt; color:#D5D5D5; background-color:#3A3A3A}
+
+
+
+	textarea {border-color:#3A3A3A; font-family:Tahoma; font-size:9pt; color:#AEAEAE; background-color:#3A3A3A}
+	textarea.A {border-color:#000000; font-family:Tahoma; font-size:9pt; color:#04CEAF; background-color:#000000}
+	textarea.W {border-color:#000000; font-family:Tahoma; font-size:9pt; color:#FFFFFF; background-color:#000000}
+	
+td
+{
+	FONT-FAMILY: Tahoma;
+    FONT-SIZE:9pt;
+	letter-spacing : -0.2pt;
+}
+
+table
+{
+    FONT-SIZE: 9pt;
+	FONT-FAMILY: Tahoma;
+	letter-spacing :-0.2pt;
+}
+
+form
+{
+	margin:0;
+	border:0;
+}
+
+A:active
+{
+    COLOR:#E2E2E2;
+    TEXT-DECORATION: none
+	letter-spacing : -0.2pt;
+}
+A:link
+{
+    COLOR: #E2E2E2;
+    TEXT-DECORATION: none
+	letter-spacing : -0.2pt;
+}
+A:visited
+{
+    COLOR: #E2E2E2;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    COLOR:#E2E2E2;
+    TEXT-DECORATION: none
+	letter-spacing : -0.2pt;
+}
+
+A.font:active
+{
+    COLOR:#3d3d3d;
+    TEXT-DECORATION: none
+}
+A.fontA:link
+{
+    COLOR: #6262628;
+    TEXT-DECORATION: none
+}
+A.fontA:visited
+{
+    COLOR: #484848;
+    TEXT-DECORATION: none
+}
+A.fontA:hover
+{ 
+	COLOR:#484848;
+    TEXT-DECORATION: underline
+}
+/* CHtmlForm¿ë css */
+.HTMLFORM_TITLE_TABLE
+{
+    FONT-SIZE: 9pt;
+	FONT-FAMILY: Tahoma;
+	letter-spacing :-0.2pt;
+	width:792px;
+	height:30px;
+}
+
+
+.title_text {
+	color: #C0FF00;
+	font-weight: bold;
+}
+
+.table_title {color: #DCDCDC}

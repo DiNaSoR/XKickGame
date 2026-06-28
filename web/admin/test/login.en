@@ -1,0 +1,114 @@
+<?
+	header( "content-type:text/html;charset=utf-8");
+	require_once( "./class_inc/config.inc" );
+	require_once( "./class_inc/crypt.inc" );
+	require_once( "./class_inc/login.inc" );
+	require_once( "./class_inc/database.inc" );
+	$strID  = trim($_POST['userid']);
+	$strPass= trim($_POST['passwd']);
+	$bSaveID= false;
+	if( $_POST['idsave'] == 'Y' ) $bSaveID= true;
+// 로그아웃
+
+	if( $_POST['logout'] == 'Y' ) 
+	{
+		
+		$hLogin = new CLogin( "tb_mst_admin", "admin_id", "admin_pass", "admin_seq", "admin_name", "admin_level" );
+		$hLogin->Logout();
+		echo "<script>parent.location.replace('".CONFIG_DOC_ROOT."');</script>";
+		exit;
+	}
+// 로그인
+	if( $strID != "" )
+	{
+		$hLogin = new CLogin( "tb_mst_admin", "admin_id", "admin_pass", "admin_seq", "admin_name", "admin_level" );
+	//	$hLogin->SetAllowIP( "221.148.239.*", "61.74.215.71"  );
+		$nResult = $hLogin->Login( $strID, $strPass, $bSaveID, false );
+		switch( $nResult )
+		{
+			case -1:  echo "<script>alert('".IDS_LOGIN_EXIST."');    parent.FORM_LOGIN.userid.value=''; parent.FORM_LOGIN.userid.focus();</script>"; exit;
+			case -2:  echo "<script>alert('".IDS_LOGIN_PASSWORD."'); parent.FORM_LOGIN.userid.passwd=''; parent.FORM_LOGIN.passwd.focus();</script>"; exit;
+			case -3:  echo "<script>alert('".IDS_LOGIN_DENYIP."');  </script> "; exit;
+		}
+		echo "<script>parent.location.replace('".$_SERVER["PHP_SELF"]."');</script>";
+	} else
+
+// 로그인창
+	{
+		$hLogin		= new CLogin();
+		$strSavedID = $hLogin->GetCookie( "admin_id" );
+	}
+?>
+<html>
+<head>
+<LINK REL=STYLESHEET TYPE="text/css" HREF="<?=CONFIG_DOC_ROOT?>/css/index.css">
+<title><?=IDS_SITE_NAME?></title>
+</head>
+<script>
+<!--
+function CheckForm()
+{
+	var hForm = document.FORM_LOGIN;
+	if(hForm.userid.value == "")		{ alert('<?=IDS_LOGIN_INPUT_ID?>');  hForm.userid.focus(); return false;	}
+	else if(hForm.passwd.value == "")	{ alert('<?=IDS_LOGIN_INPUT_PASS?>');hForm.passwd.focus(); return false;	}
+}
+
+function SetDefaultFocus()
+{
+	if(document.FORM_LOGIN.userid.value == "")  document.FORM_LOGIN.userid.focus();
+	else										document.FORM_LOGIN.passwd.focus();
+}
+
+function boxMsg()
+{
+	if(document.FORM_LOGIN.idsave.checked == true)
+	{
+		if(confirm("<?=IDS_LOGIN_IDSAVE_CONFIRM?>") == false)
+		{
+			document.FORM_LOGIN.idsave.checked = false;
+		}
+	}
+}
+//-->
+</script>
+<body Onload="SetDefaultFocus();" topmargin="0" leftmargin="0">
+<form name="FORM_LOGIN" method="post" action="<?=$PHP_SELF?>" OnSubmit="return CheckForm()" target="noshow">
+<input type="hidden" name="IsSubmit" value="Yes">
+  <table width="100%" height="100%"  border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+	  <table width="100" border="0" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+          <td rowspan="3"><img src="image/login_left.gif" width="117" height="214"></td>
+          <td><img src="image/login_top.gif" width="317" height="47"></td>
+          <td rowspan="3"><img src="image/login_right.gif" width="24" height="214"></td>
+        </tr>
+        <tr>
+          <td height="88" bgcolor="3A3A3A">
+<!-- 로그인테이블 시작 -->		  
+		  <table width="303" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="88" height="20" align="right"><img src="image/id.gif" width="85" height="5"></td>
+              <td width="110"><input name="userid" type="text" size="18" maxlength="15" tabindex="1" value="<?=$strSavedID?>"></td>
+              <td width="98" rowspan="2" align="center"><input type="image" src="image/B_login.gif" width="66" height="41" border="0" tabindex="3"></td>
+			  <td rowspan="2" align="center"> &nbsp;<input type="checkbox" name="idsave" value="Y" onclick="boxMsg();"<?if($strSavedID)echo" checked";?>></td>
+            </tr>
+            <tr>
+              <td height="20" align="right"><img src="image/pw.gif" width="85" height="5"></td>
+              <td><input name="passwd" type="password" size="18" maxlength="15" tabindex="2"></td>
+            </tr>
+          </table>
+<!-- 로그인테이블 끝 -->		  
+		  </td>
+          </tr>
+        <tr>
+          <td><img src="image/login_bottom.gif" width="317" height="79"></td>
+          </tr>
+      </table>      
+	  </td>
+    </tr>
+  </table>
+</form>
+<iframe name="noshow" width="1" height="0"></iframe>
+</body>
+</html>

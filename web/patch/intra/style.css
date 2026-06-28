@@ -1,0 +1,72 @@
+A:link, A:visited       {text-decoration:none; color:#000000};
+a:hover                 {text-decoration: underline; color: #000000;}
+a.link1:hover           {text-decoration: underline; color: ##000000; background-color: #EDE7A9}
+body                    {font-size: 9pt; font-family:vernada, helvertica,,u; color:#111111;}
+td                      {font-size: 9pt; font-family:vernada, helvertica,,u; color:#000000;}
+input.text { font-family:굴림; font-size:9pt; border-style:solid; border-width:1pt; border-color: font-size:9pt; color: background-color:}
+textarea		{ border-style:solid; border-width:1pt; border-color:; font-size:9pt; color:; background-color:}
+select.a{ font-family:굴림; font-size:9pt; border-style:solid; border-width:0pt; border-color:; color:; background-color: }
+
+.menuBar
+{
+    POSITION: relative;
+    BACKGROUND-COLOR: transparent;
+    TEXT-ALIGN: left
+}
+.Bar
+{
+    FLOAT: left;
+    WIDTH: 100px;
+    CURSOR: hand;
+    TEXT-INDENT: 5px;
+    POSITION: relative;
+    TEXT-ALIGN: left
+}
+.menu
+{
+  
+    VISIBILITY: hidden;
+    WIDTH: 150px;
+    LINE-HEIGHT: 140%;
+    POSITION: absolute;
+    BACKGROUND-COLOR:#F8FBE1
+}
+.menuItem
+{
+    PADDING-RIGHT: 15px;
+    PADDING-LEFT: 10px;
+    WIDTH: 100%;
+    CURSOR: hand;
+    LINE-HEIGHT: 20px;
+}
+.ItemMouseOver
+{
+    PADDING-RIGHT: 15px;
+    PADDING-LEFT: 10px;
+    WIDTH: 100%;
+    CURSOR: hand;
+    COLOR: white;
+    LINE-HEIGHT: 20px;
+    BORDER-BOTTOM: gold 1px solid;
+    BACKGROUND-COLOR: highlight
+}
+.ItemMouseOut
+{
+    WIDTH: 100%
+}
+.Arrow
+{
+    FLOAT: right;
+    FONT-FAMILY: Webdings;
+    POSITION: absolute;
+    TEXT-ALIGN: left
+}
+.barOver
+{
+    FLOAT: left;
+    WIDTH: 100px;
+    CURSOR: hand;
+    TEXT-INDENT: 5px;
+    POSITION: relative;
+    TEXT-ALIGN: left
+}

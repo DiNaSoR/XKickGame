@@ -1,0 +1,142 @@
+<?
+	header( "Content-Type: text/html; charset=UTF-8" );
+	require_once( "xkick_socket.inc" );
+	require_once( "xkick_class.inc" );
+	
+	$hXKick = new CXKickManager;
+
+	// 날씨 예제
+	/* 
+	// 날씨 목록	
+	$hResult = $hXKick->GetWeatherMgr()->GetWeatherList();
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["weather_seq"]."<br>";
+
+	// 날씨 건당정보
+	$hRows = $hXKick->GetWeatherMgr()->GetWeather(5);
+	echo  $hRows["weather_seq"];
+
+	// 날씨정보 추가
+	$hXKick->GetWeatherMgr()->InsertWeather( WEATHER_CLOUDY, "00:00:00", "01:00:00", WED );
+
+	// 날씨정보 수정
+	$hXKick->GetWeatherMgr()->EditWeather( 11, WEATHER_FINE, "00:20:00", "02:00:00", MON );
+
+	// 날씨정보 삭제
+	$hXKick->GetWeatherMgr()->DeleteWeather( 11 );
+	*/
+
+	// 공지 예제
+	/*
+	// 공지 목록	
+	$hResult = $hXKick->GetNoticeMgr()->GetNoticeList();
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["notice_text"]."<br>";
+
+	// 공지 건당정보
+	$hRows = $hXKick->GetNoticeMgr()->GetNotice(74);
+	echo  $hRows["notice_text"];
+
+	// 공지 추가
+	$hXKick->GetNoticeMgr()->InsertNotice( "공지사항 모듈 테스트중입니다.", true );
+
+	// 공지 수정
+	$hXKick->GetNoticeMgr()->EditNotice( 82, "공지사항 변경 테스트중입니다.", true );
+
+	// 공지 삭제
+	$hXKick->GetNoticeMgr()->DeleteNotice( 82 );
+
+
+	// 일정 리스트
+	$hResult = $hXKick->GetScheduleMgr()->GetScheduleList();
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["schedule_desc"]."<br>";
+
+	// 일정 정보
+	$hRows = $hXKick->GetScheduleMgr()->GetSchedule(14);
+	echo  $hRows["schedule_desc"];
+	// 일정 추가
+	$hXKick->GetScheduleMgr()->EditSchedule(  101, TOURNAMENT_TIME, "10:00:00", "12:00:00", ALL, "테스트일정" );
+	// 일정 수정
+	$hXKick->GetScheduleMgr()->EditSchedule( 14, 101, TOURNAMENT_TIME, "10:00:00", "12:00:00", ALL, "테스트일정" );
+	// 일정 삭제
+	$hXKick->GetScheduleMgr()->DeleteSchedule( 14);
+
+	// 멤버 리스트
+	$hResult = $hXKick->GetMemberMgr()->GetMemberList( 1, 10 );
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["member_name"]."<br>";
+
+	// 멤버 정보
+	$hRows = $hXKick->GetMemberMgr()->GetMemberData( 19 );
+	echo  $hRows["member_name"];
+
+	// 멤버 아이디로 찾기
+	$hResult = $hXKick->GetMemberMgr()->FindMemberByID( "cyg", 0, 10 );
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["member_name"]."<br>";
+
+	// 멤버 이름으로 찾기
+	$hResult = $hXKick->GetMemberMgr()->FindMemberByName( "박", 0, 10 );
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["member_name"]."<br>";
+
+	// 멤버 주민번호로 찾기
+	$hResult = $hXKick->GetMemberMgr()->FindMemberByRegist( "111", 0, 20 );
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["member_name"]."<br>";
+
+	// 캐릭터명으로 찾기
+	$hResult = $hXKick->GetMemberMgr()->FindMemberByCharacter( "가시네", 0, 20 );
+	while( $hRows = mysql_fetch_array($hResult, MYSQL_ASSOC ) ) echo $hRows["member_name"]."<br>";
+
+*/
+
+	
+
+	
+	
+	/* 
+
+
+	// 공지 수정
+	$hXKick->GetNoticeMgr()->EditNotice( 82, "공지사항 변경 테스트중입니다.", true );
+
+	// 공지 삭제
+	$hXKick->GetNoticeMgr()->DeleteNotice( 82 );
+	*/
+
+	
+	/* 
+	// 이하 게임서버 통신 관련 예제
+
+	$hSocket = new CXKickSocket;
+	$hSocket->Connect();
+	if( $hSocket->Login() != OK )
+	{
+		echo "로그인 실패";
+		exit;
+	}
+
+
+	if( $hSocket->UpdateWeather() != OK )
+	{
+		echo "날씨 업데이트 실패";
+		exit;
+	}
+	if( $hSocket->UpdateSchedule() != OK )
+	{
+		echo "스케쥴 업데이트 실패";
+		exit;
+	}
+
+	if( $hSocket->UpdateNotice() != OK )
+	{
+		echo "공지사항 업데이트 실패";
+		exit;
+	}
+
+	if( $hSocket->SendBroadcast( CHAT_KIND_NOTICE, "서버 테스트를 위한 메시지입니다." ) != OK )
+	{
+		echo "공지사항 업데이트 실패";
+		exit;
+	}
+
+	$hSocket->Close();
+	*/
+
+
+?>

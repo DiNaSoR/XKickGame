@@ -1,0 +1,6 @@
+<?
+	require_once( "./class_inc/login.inc" );
+	$hLogin		= new CLogin();
+	if( $hLogin->GetCookie( "admin_seq" ) < 1)  include "login.en";
+	else										include "main.en";
+?>

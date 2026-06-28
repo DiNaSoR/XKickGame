@@ -1,0 +1,26 @@
+#!/bin/bash
+
+mode=$1
+
+	case "$mode" in
+			 'copy')
+			 	killall -9 XKICK_Game_2
+			 	killall -9 XKICK_Game_1
+				make copy
+				;;
+	         'all')
+				/home/kicks/football/Table/loadtable
+				/home/kicks/football/common/CLIENT_SHARE/download
+				svn up /home/kicks/football/common/
+				./version_maker 
+				make clean
+				make
+				;;
+			*)
+				svn up /home/kicks/football/common/
+				./version_maker
+				make
+				;;
+	esac
+
+

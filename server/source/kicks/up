@@ -1,0 +1,4 @@
+#!/bin/bash
+tar czvf kicks.tar.gz */*.cpp */*.h */Makefile */*/*.csv Makefile
+cp kicks.tar.gz ../back/kicks-`date +%Y%m%d-%H%M%S`.tar.gz
+scp kicks.tar.gz kicks@222.122.28.97:.

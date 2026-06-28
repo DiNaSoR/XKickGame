@@ -1,0 +1,1520 @@
+// 사용금지
+// 백업파일입니다.
+
+#ifndef _PROTOCOL_H_
+#define _PROTOCOL_H_
+
+#ifdef	_WIN32
+	#include "ComInclude.h"
+	#include "ComStructure.h"
+#else
+	#include "Define.h"
+	#include "Struct.h"
+#endif
+
+
+#ifdef	_WIN32
+	#pragma pack(push,1)
+#else
+	#pragma pack(push,1)
+#endif
+
+
+//////////////////////////////////////////////////////////////////////////
+// COMMAND
+//////////////////////////////////////////////////////////////////////////
+#define CM_CERTIFY_LOGIN		1000 
+#define CM_INSTANT_LOGIN		1001 
+#define CM_CERTIFY_EXIT			1002
+#define CM_MEMBER_INFO			1100
+#define CM_CHARACTER_INFO		1200
+#define CM_CHARACTER_END		1201
+#define CM_CREATE_CHARACTER		1202
+#define CM_DELETE_CHARACTER		1203
+#define CM_CHOICE_CHARACTER		1204
+
+
+
+#define CM_SERVER_LIST			1300
+#define CM_EXECUTE_TUTORIAL		1400
+#define CM_EXECUTE_QUEST		1401
+
+#define CM_GAME_LOGIN			2000
+#define CM_GAME_EXIT			2001
+#define CM_UDP_CONFIRM			2002
+#define CM_NOTICE_LIST			2003 // 공지사항 목록 (CYG)
+
+#define CM_PLAYER_INFO			2100
+#define CM_ITEM_INFO			2101
+#define CM_SKILL_INFO			2102
+#define CM_TRAINING_INFO		2103
+#define CM_CEREMONY_INFO		2104
+#define CM_QUEST_INFO			2105
+#define CM_SALE_LIST			2110
+
+#define CM_ROOM_INFO			2200
+#define CM_ROOM_LIST			2201
+#define CM_LOBBY_LIST			2202
+#define CM_CREATE_ROOM			2203
+#define CM_SET_ROOM				2204
+#define CM_CHOICE_ROOM			2205
+#define CM_QUICK_ROOM			2206
+#define CM_LEAVE_ROOM			2300
+#define CM_CHANGE_PARENT		2301
+#define CM_CHANGE_JANG			2302
+#define CM_ATHLETE_INFO			2303
+#define CM_ATHLETE_END			2304
+#define CM_ROBOT_INFO			2305
+#define CM_ROBOT_END			2306
+#define CM_CHANGE_GROUND		2307
+#define CM_CHANGE_BALL			2308
+#define CM_FORCE_OUT			2309
+#define CM_INVITE_PLAYER		2310
+
+#define CM_GAME_READY			2400
+#define CM_GAME_START			2401
+#define CM_GAME_COUNT			2402
+#define CM_GAME_LOAD			2403
+#define CM_GAME_PLAY			2404
+#define CM_GAME_RESULT			2405
+#define	CM_GAME_END				2406
+#define CM_LEVEL_UP				2407
+
+#define CM_CHANGE_TEAM			2501
+#define CM_CHANGE_POSITION		2502
+
+#define CM_CHANGE_MENT			2601
+#define CM_GROWUP_CHARACTER		2701
+#define CM_QUEST_REWARD		2702 // 퀘스트에 대한 보상을한다 (CYG)
+
+
+
+#define CM_SHOPITEM_LIST		3100
+#define CM_UPDATE_ITEM			3101
+#define CM_EQUIP_ITEM			3102
+#define CM_DIVEST_ITEM			3103
+#define CM_BUY_ITEM				3104
+#define CM_GIFT_ITEM			3105
+#define CM_EXCHANGE_ITEM		3106
+
+#define CM_SHOPSKILL_LIST		3200
+#define CM_UPDATE_SKILL			3201
+#define CM_EQUIP_SKILL			3202
+#define CM_DIVEST_SKILL			3203
+#define CM_BUY_SKILL			3204
+
+#define CM_SHOPTRAINING_LIST	3300
+#define CM_UPDATE_TRAINING		3301
+#define CM_BUY_TRAINING			3304
+
+#define CM_SHOPCEREMONY_LIST	3400
+#define CM_UPDATE_CEREMONY		3401
+#define CM_EQUIP_CEREMONY		3402
+#define CM_DIVEST_CEREMONY		3403
+#define CM_BUY_CEREMONY			3404
+
+#define CM_QUEST_LIST			3500
+#define CM_UPDATE_QUEST			3501
+#define CM_CREATE_QUEST			3502
+
+#define CM_TCP_PING				5000
+#define CM_SEND_MESSAGE			5001
+#define CM_RAISE_FACULTY		5002
+#define CM_CHANGE_SETTING		5003
+
+#define CM_UDP_PUNCHING			9000
+#define CM_UDP_PING				9001
+
+
+#define CM_CHARACTER_SEARCH		1205 // 캐릭터 찾기 (CYG)
+#define CM_POST_ITEM			3107 // 아이템 전달 (소포시스템) (CYG)
+#define CM_MISSION_REWARD		2703 // 미션에 대한 보상을 한다. (CYG)
+//--SOURCE_AUTO_INSERT_SCRIPT		
+
+
+//////////////////////////////////////////////////////////////////////////
+// Server To Server 프로토콜
+//////////////////////////////////////////////////////////////////////////
+#define CM_STS_LOGIN			101
+
+
+class CHeadPacket
+{ public:
+	int				m_nCommand;
+	int				m_nBodySize;
+};
+//////////////////////////////////////////////////////////////////////////
+// CERTIFY PROTOCOL
+//////////////////////////////////////////////////////////////////////////
+class CCSCertifyLogin : public CHeadPacket
+{ public:
+	char			m_sID[ID_NAME_SIZE];
+	char			m_sPass[PASS_SIZE];
+};
+
+class CSCCertifyLogin : public CHeadPacket
+{ public:
+	char			m_nResponse;
+	int				m_nMemberSeq;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSInstantLogin : public CHeadPacket
+{ public:
+	int				m_nMemberSeq;
+};
+
+class CSCInstantLogin : public CHeadPacket
+{ public:
+	char			m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSCertifyExit : public CHeadPacket
+{ public:
+	char			m_nReason;
+};
+
+class CSCCertifyExit : public CHeadPacket
+{ public:
+	char			m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSMemberInfo : public CHeadPacket
+{ public:
+	int				m_nMemberSeq;
+};
+
+class CSCMemberInfo : public CHeadPacket
+{ public:
+	char			m_nResponse;
+	int				m_nLastSeq;
+	char			m_nCount;
+	char			m_nTutorial;
+	char			m_nQuest;
+	CSetting		m_cSetting;
+	CMoney			m_cMoney;
+	int				m_nLoginDate;
+	int				m_nDeleteDate;
+};
+
+//////////////////////////////////////////////////////////////////////////
+class CCharacterInfo
+{ public:
+	int				m_nPlayerSeq;
+	short			m_nOrder;
+	char			m_nPosition;
+	char			m_nCondition;
+	char			m_nAlias;
+	char			m_sName[PLAYER_NAME_SIZE];
+	CLevel			m_cLevel;
+	CShape			m_cShape;
+	int				m_nEquipWear[MAX_EQUIP];
+	int				m_nHomeWear[4];
+	int				m_nAwayWear[4];
+};
+
+class CCSCharacterInfo : public CHeadPacket
+{ public:
+	int				m_nMemberSeq;
+};
+
+class CSCCharacterInfo : public CHeadPacket
+{ public:
+	char			m_nResponse;
+	CCharacterInfo	m_cCharacterInfo;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSCharacterEnd : public CHeadPacket
+{ public:
+};
+
+class CSCCharacterEnd : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSCreateCharacter : public CHeadPacket
+{ public:
+	char				m_sName[PLAYER_NAME_SIZE];
+	CShape				m_cShape;
+	int					m_nEquip[5];
+};
+
+class CSCCreateCharacter : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSDeleteCharacter : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+	char				m_sJumin[20];
+};
+
+class CSCDeleteCharacter : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nPlayerSeq;
+	int					m_nDeleteDate;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChoiceCharacter : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCChoiceCharacter : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nPlayerSeq;
+};
+//////////////////////////////////////////////////////////////////////////
+class CServerData
+{ public:
+	char				m_nState;
+	int					m_nServerCode;
+	char				m_sTitle[SERVER_NAME_SIZE];
+	short				m_nMax;
+	short				m_nCurrent;
+	CAddress			m_cAddress;
+};
+
+class CCSServerList : public CHeadPacket
+{ public:
+	char				m_nChannel;
+};
+
+class CSCServerList : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nChannel;
+	CServerData			m_cServerData[LIST10_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSExecuteTutorial : public CHeadPacket
+{ public:
+	char				m_nTutorial;
+	char				m_nOrder;
+};
+
+class CSCExecuteTutorial : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nTutorial;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSExecuteQuest : public CHeadPacket
+{ public:
+	char				m_nQuest;
+	char				m_nOrder;
+};
+
+class CSCExecuteQuest : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nQuest;
+	CMoney				m_cMoney;
+};
+//////////////////////////////////////////////////////////////////////////
+// GAME PROTOCOL
+//////////////////////////////////////////////////////////////////////////
+class CCSGameLogin : public CHeadPacket
+{ public:
+	int				m_nMemberSeq;
+	int				m_nPlayerSeq;
+};
+
+class CSCGameLogin : public CHeadPacket
+{ public:
+	char			m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGameExit : public CHeadPacket
+{ public:
+	char			m_nReason;
+};
+
+class CSCGameExit : public CHeadPacket
+{ public:
+	char			m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSUDPConfirm : public CHeadPacket
+{ public:
+	int				m_nPlayerSeq;
+};
+
+class CSCUDPConfirm : public CHeadPacket
+{ public:
+	char			m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+// 공지사항 목록 (CYG)
+class CNoticeData
+{ public:
+	int					m_nNoticeSeq;
+	char				m_strText[TIP_SIZE];
+};
+
+class CCSNoticeList : public CHeadPacket
+{ public:
+	int m_nVersion; // 공지사항 버전
+};
+
+class CSCNoticeList : public CHeadPacket
+{ public:
+	char m_nResponse;
+	int    m_nVersion;
+	CNoticeData m_cNoticeList[LIST10_SIZE];
+};
+
+//////////////////////////////////////////////////////////////////////////
+class CPlayerInfo
+{ public:
+	int					m_nPlayerSeq;
+	char				m_sName[PLAYER_NAME_SIZE];
+	char				m_sMent[PLAYER_MENT_SIZE];
+	CLevel				m_cLevel;
+	CFaculty			m_cBaseFaculty;
+	CFaculty			m_cRaiseFaculty;
+	CFaculty			m_cItemFaculty;
+	CFaculty			m_cTrainingFaculty;
+	CRecord				m_cTotalRecord;
+	CRecord				m_cQuarterRecord;
+	CRanking			m_cTotalRanking;
+	CRanking			m_cQuarterRanking;
+};
+
+class CCSPlayerInfo: public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCPlayerInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CPlayerInfo			m_cPlayerInfo;
+};
+//////////////////////////////////////////////////////////////////////////
+class CItemInfo
+{ public:
+	int					m_nItemSeq;
+	int					m_nCode;
+	char				m_nEquipKind;
+	short				m_nAmount;
+	char				m_nSlot;
+	int					m_nOptionCode[OPTION_SIZE];
+	int					m_nSlotCode[SLOT_SIZE];
+};
+
+class CCSItemInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCItemInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nCount;
+	CItemInfo			m_cItemInfo[MAX_ITEM_LIST];  // 가변패킷 이 변수 다음에 다른 변수를 추가하지 말 것 (CYG)
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSSkillInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCSkillInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nCount;
+	CSkillInfo			m_cSkillInfo[MAX_SKILL_LIST]; // 가변패킷 이 변수 다음에 다른 변수를 추가하지 말 것 (CYG)
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSTrainingInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCTrainingInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nCount;
+	CTrainingInfo		m_cTrainingInfo[MAX_TRAINING_LIST]; // 가변패킷 이 변수 다음에 다른 변수를 추가하지 말 것 (CYG)
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSCeremonyInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCCeremonyInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nCount;
+	CCeremonyInfo		m_cCeremonyInfo[MAX_CEREMONEY_LIST];// 가변패킷 이 변수 다음에 다른 변수를 추가하지 말 것 (CYG)
+};
+//////////////////////////////////////////////////////////////////////////
+class CQuestInfo
+{ public:
+	int					m_nQuestSeq;
+	int					m_nCode;
+	short				m_nAmount;
+	int					m_nPlayDate;
+};
+
+class CCSQuestInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCQuestInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nCount;
+	CQuestInfo			m_cQuestInfo[MAX_QUEST_LIST]; // 가변패킷 이 변수 다음에 다른 변수를 추가하지 말 것 (CYG)
+};
+//////////////////////////////////////////////////////////////////////////
+class CSaleList
+{ public:
+	char				m_nObjectKind;
+	int					m_nCode;
+	char				m_nSaleKind;
+	int					m_nPrice;
+	short				m_nAmount;
+	int					m_nSaleDate;
+};
+
+class CCSSaleList : public CHeadPacket
+{ public:
+	char				m_nPeriod;
+	char				m_nPage;
+};
+
+class CSCSaleList : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nPeriod;
+	char				m_nPage;
+	char				m_nTotalPage;
+	CSaleList			m_cSaleList[LIST10_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CRoomInfo
+{ public:
+	char				m_nState;
+	char				m_nMode;
+	char				m_nCource;
+	int					m_nRoomSeq;
+	char				m_nRoomJangTeam;
+	int					m_nHomeJangSeq;
+	int					m_nAwayJangSeq;
+
+	char				m_sTitle[TITLE_NAME_SIZE];
+	char				m_sPass[5];
+	int					m_nQuestCode;
+	char 				m_nGroundCode;
+	char 				m_nBallCode;
+	char				m_nTimeCode;
+	char				m_nWeatherCode;
+	char				m_nAttackCode;
+	char 				m_nScaleCode;
+	char				m_nAICode;
+	char 				m_nStartLevel;
+	char 				m_nEndLevel;
+	char				m_nAttackTeam;
+	char				m_nMaxCount;
+
+	char 				m_nCheckClub;
+	char 				m_nCheckTime;
+	char 				m_nCheckWeather;
+	char 				m_nCheckView;
+	char 				m_nCheckViewChat;
+	CReserveSeat		m_cHomeSeat;
+	CReserveSeat		m_cAwaySeat;
+	CReserveSeat		m_cViewSeat;
+};
+
+class CCSRoomInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCRoomInfo: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CRoomInfo			m_cRoomInfo;
+};
+//////////////////////////////////////////////////////////////////////////
+class CRoomData
+{ public:
+	char				m_nState;
+	char				m_nMode;
+	char				m_nCource;
+	int					m_nRoomSeq;
+
+	char				m_sTitle[TITLE_NAME_SIZE];
+	char 				m_nScaleCode;
+	char				m_nAICode;
+	char 				m_nStartLevel;
+	char 				m_nEndLevel;
+	char 				m_nCheckClub;
+	char 				m_nCheckView;
+	char				m_nAthleteCount;
+	char				m_nMaxCount;
+	char				m_nViewCount;
+	CReserveSeat		m_cHomeSeat;
+	CReserveSeat		m_cAwaySeat;
+};
+
+class CCSRoomList : public CHeadPacket
+{ public:
+	char				m_nListKind;
+	char				m_nPage;
+};
+
+class CSCRoomList: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nPage;
+	CRoomData			m_cRoomData[LIST5_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CLobbyData
+{ public:
+	char				m_nState;
+	char				m_nPlayerSeq;
+	char				m_nPosition;
+	char				m_nLevel;
+	char				m_sName[PLAYER_NAME_SIZE];
+	char				m_sMent[PLAYER_MENT_SIZE];
+};
+
+class CCSLobbyList : public CHeadPacket
+{ public:
+	char				m_nPage;
+};
+
+class CSCLobbyList : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nPage;
+	CLobbyData			m_cLobbyData[LIST10_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSCreateRoom : public CHeadPacket
+{ public:
+	char				m_nState;
+	char				m_nMode;
+	char				m_sTitle[TITLE_NAME_SIZE];
+	char				m_sPass[5];
+	char				m_nAttackCode;
+	char 				m_nScaleCode;
+	char				m_nAICode;
+	char 				m_nStartLevel;
+	char 				m_nEndLevel;
+	char 				m_nCheckClub;
+	char 				m_nCheckTime;
+	char 				m_nCheckWeather;
+	char 				m_nCheckView;
+	char 				m_nCheckViewChat;
+	char				m_nMaxCount;
+	char				m_nHomePosition[TEAM_SIZE];
+	char				m_nAwayPosition[TEAM_SIZE];
+};
+
+class CSCCreateRoom: public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSSetRoom : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+	char				m_nState;
+	char				m_nMode;
+	char				m_sTitle[TITLE_NAME_SIZE];
+	char				m_sPass[5];
+	char				m_nAttackCode;
+	char 				m_nScaleCode;
+	char				m_nAICode;
+	char 				m_nStartLevel;
+	char 				m_nEndLevel;
+	char 				m_nCheckClub;
+	char 				m_nCheckTime;
+	char 				m_nCheckWeather;
+	char 				m_nCheckView;
+	char 				m_nCheckViewChat;
+	char				m_nMaxCount;
+};
+
+class CSCSetRoom : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nState;
+	char				m_nMode;
+	char				m_sTitle[TITLE_NAME_SIZE];
+	char				m_sPass[5];
+	char				m_nAttackCode;
+	char 				m_nScaleCode;
+	char				m_nAICode;
+	char 				m_nStartLevel;
+	char 				m_nEndLevel;
+	char 				m_nCheckClub;
+	char 				m_nCheckTime;
+	char 				m_nCheckWeather;
+	char 				m_nCheckView;
+	char 				m_nCheckViewChat;
+	char				m_nMaxCount;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChoiceRoom : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+	char				m_nType;
+	char				m_sPass[5];
+};
+
+class CSCChoiceRoom: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nRoomSeq;
+	char				m_nTeam;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSQuickRoom : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCQuickRoom : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSLeaveRoom : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+};
+
+class CSCLeaveRoom: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nLeavePlayerSeq;
+	char				m_nLeaveTeam;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeParent : public CHeadPacket
+{ public:
+};
+
+class CSCChangeParent: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nParentSeq;
+	CAddress			m_cParentAddress;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeJang : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCChangeJang: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nRoomJangTeam;
+	int					m_nHomeJangSeq;
+	int					m_nAwayJangSeq;
+};
+//////////////////////////////////////////////////////////////////////////
+class CAthleteInfo 
+{ public:
+	int					m_nPlayerSeq;
+	char				m_nPosition;
+	char				m_nTeam;
+	char				m_nSeat;
+	char				m_sName[PLAYER_NAME_SIZE];
+	char				m_sMent[PLAYER_MENT_SIZE]; //멘트 추가 (CYG)
+	CLevel				m_cLevel;
+	CShape				m_cShape;
+	CAddress			m_cAddress;
+	CFaculty			m_cBaseFaculty;
+	CFaculty			m_cRaiseFaculty;
+	CFaculty			m_cItemFaculty;
+	CFaculty			m_cTrainingFaculty;
+	int					m_nEquipWear[MAX_EQUIP];
+	int					m_nHomeWear[4];
+	int					m_nAwayWear[4];
+	CSkillInfo			m_cSkillInfo[MAX_SKILL];
+	CCeremonyInfo		m_cCeremonyInfo[MAX_CEREMONY];
+};
+
+class CCSAthleteInfo : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCAthleteInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CAthleteInfo		m_cAthleteInfo;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSAthleteEnd : public CHeadPacket
+{ public:
+};
+
+class CSCAthleteEnd : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CRobotInfo
+{ public:
+	int					m_nRobotSeq;
+	char				m_nTeam;
+	char				m_nSeat;
+	char				m_nLevel;
+	char				m_nPosition;
+	int					m_nCostume;
+};
+
+class CCSRobotInfo : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+};
+
+class CSCRobotInfo : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CRobotInfo			m_cRobotInfo;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSRobotEnd : public CHeadPacket
+{ public:
+};
+
+class CSCRobotEnd : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeGround : public CHeadPacket
+{ public:
+	int					m_nGroundCode;
+};
+
+class CSCChangeGround : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nGroundCode;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeBall : public CHeadPacket
+{ public:
+	int					m_nBallCode;
+};
+
+class CSCChangeBall : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nBallCode;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSForceOut : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+
+class CSCForceOut : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSInvitePlayer : public CHeadPacket
+{ public:
+	int  m_nPlayerSeq;
+	char m_sMessage[MESSAGE_SIZE];
+};
+
+class CSCInvitePlayer : public CHeadPacket
+{ public:
+	char m_nResponse;
+	char m_sFromName[PLAYER_NAME_SIZE];
+	char m_sMessage[MESSAGE_SIZE];
+	char m_sPass[5];
+	int m_nRoomSeq;
+};
+//////////////////////////////////////////////////////////////////////////
+
+class CCSGameReady : public CHeadPacket
+{ public:
+	char				m_nReady;
+};
+
+class CSCGameReady : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nReady;
+	char				m_nCancelTeam;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGameStart : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+};
+
+class CSCGameStart : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nParentSeq;
+	CAddress			m_cParentAddress;
+	CMission			m_cMission; // 미션코드(CYG)
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGameCount : public CHeadPacket
+{ public:
+	char				m_nCount;
+};
+
+class CSCGameCount : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_nCount;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGameLoad : public CHeadPacket
+{ public:
+	char				m_nStep;
+};
+
+class CSCGameLoad : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nPlayerSeq;
+	char				m_nStep;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGamePlay : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+};
+
+class CSCGamePlay : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGameResult : public CHeadPacket
+{ public:
+	int					m_nMvpSeq;
+	char				m_nMvpLevel;
+	char				m_nMvpPosition;
+	char				m_sMvpName[PLAYER_NAME_SIZE];
+	float				m_fCurrentTime;
+	CResult				m_cHomeResult;
+	CResult				m_cAwayResult;
+	CEachResult			m_cEachResult[TEAM_SIZE*2];
+};
+
+class CSCGameResult : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nMvpSeq;
+	char				m_nMvpLevel;
+	char				m_nMvpPosition;
+	char				m_sMvpName[PLAYER_NAME_SIZE];
+	float				m_fCurrentTime;
+	CResult				m_cHomeResult;
+	CResult				m_cAwayResult;
+	CEachResult			m_cEachResult[TEAM_SIZE*2];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGameEnd : public CHeadPacket
+{ public:
+	int					m_nRoomSeq;
+};
+
+class CSCGameEnd : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSLevelUp : public CHeadPacket
+{ public:
+};
+
+class CSCLevelUp: public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CMoney				m_cMoney;
+	CLevel				m_cLevel;
+	CFaculty			m_cBaseFaculty;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeTeam : public CHeadPacket
+{ public:
+	char				m_nChangeTeam;
+};
+
+class CSCChangeTeam : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nPlayerSeq;
+	char				m_nFromTeam;
+	char				m_nToTeam;
+	char				m_nSeat;
+	CReserveSeat		m_cHomeSeat;
+	CReserveSeat		m_cAwaySeat;
+	CReserveSeat		m_cViewSeat;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangePosition : public CHeadPacket
+{ public:
+	char				m_nHomePosition[TEAM_SIZE];
+	char				m_nAwayPosition[TEAM_SIZE];
+};
+
+class CSCChangePosition : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CReserveSeat		m_cHomeSeat;
+	CReserveSeat		m_cAwaySeat;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeMent : public CHeadPacket
+{ public:
+	char				m_sMent[PLAYER_MENT_SIZE];
+};
+
+class CSCChangeMent : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	char				m_sMent[PLAYER_MENT_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGrowupCharacter : public CHeadPacket
+{ public:
+	char				m_nPosition;
+};
+
+class CSCGrowupCharacter : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CPlayerInfo			m_cPlayerInfo;
+};
+//////////////////////////////////////////////////////////////////////////
+// 퀘스트에 대한 보상을한다 (CYG)
+class CCSQuestReward : public CHeadPacket
+{ public:
+	char m_nQuest; // 퀘스트 코드
+};
+
+class CSCQuestReward : public CHeadPacket
+{ public:
+	char m_nResponse; // 결과값
+};
+//////////////////////////////////////////////////////////////////////////
+
+// 3000번대
+//////////////////////////////////////////////////////////////////////////
+class CShopItemData
+{
+public:
+	int					m_nCode;
+	int					m_nRemain;
+	char				m_nDiscount;
+//	int					m_nGroupCount;
+};
+
+class CCSShopItemList : public CHeadPacket
+{ public:
+	int					m_nType;
+	char				m_nBrand;
+	short				m_nPage;
+};
+
+class CSCShopItemList : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	short				m_nCurrentPage;
+	short				m_nTotalPage;
+	CShopItemData		m_cShopItemData[LIST6_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSUpdateItem : public CHeadPacket
+{ public:
+	int                 m_nPlayerSeq;
+};
+
+class CSCUpdateItem : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	char				m_nUpdateKind;
+	int					m_nItemSeq;
+	int					m_nCode;
+	char				m_nEquipKind;
+	short				m_nAmount;
+	char				m_nSlot;
+	int					m_nOptionCode[OPTION_SIZE];
+	int					m_nSlotCode[SLOT_SIZE];
+	CFaculty			m_cItemFaculty;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSEquipItem : public CHeadPacket
+{ public:
+	int					m_nItemSeq;
+};
+
+class CSCEquipItem : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nItemSeq;
+	char				m_nEquipKind;
+	CFaculty			m_cItemFaculty;
+	int					m_nEquipWear[MAX_EQUIP];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSDivestItem : public CHeadPacket
+{ public:
+	int					m_nItemSeq;
+};
+
+class CSCDivestItem : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	int					m_nItemSeq;
+	char				m_nEquipKind;
+	CFaculty			m_cItemFaculty;
+	int					m_nEquipWear[MAX_EQUIP];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSBuyItem : public CHeadPacket
+{ public:
+	int					m_nCode;
+	char				m_nBuyKind;
+	int					m_nPrice;
+	int					m_nOptionCode[OPTION_SIZE];
+};
+
+class CSCBuyItem : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CMoney				m_cMoney;
+	CShape				m_cShape;
+	int					m_nEquipWear[MAX_EQUIP];
+	char				m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSGiftItem : public CHeadPacket
+{ public:
+	int					m_nToPlayerSeq;
+	int					m_nCode;
+	char				m_nBuyKind;
+	int					m_nPrice;
+	int					m_nOptionCode[OPTION_SIZE];
+};
+
+class CSCGiftItem : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CMoney				m_cMoney;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSExchangeItem : public CHeadPacket
+{ public:
+	int					m_nCode;
+	char				m_nBuyKind;
+	int					m_nPrice;
+};
+
+class CSCExchangeItem : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CMoney				m_cMoney;
+	CShape				m_cShape;
+	int					m_nEquipWear[MAX_EQUIP];
+};
+//////////////////////////////////////////////////////////////////////////
+class CShopSkillData
+{ public:                 
+	int                 m_nCode;
+	char                m_nDiscount;
+};
+
+class CCSShopSkillList : public CHeadPacket
+{ public:
+	char				m_nType;
+	char				m_nPosition;
+	short				m_nPage;
+};
+
+class CSCShopSkillList : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	short				m_nCurrentPage;
+	short				m_nTotalPage;
+	char				m_nType;
+	char				m_nPosition;
+	CShopSkillData      m_cShopSkillData[LIST6_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSUpdateSkill : public CHeadPacket
+{ public:
+	int                 m_nPlayerSeq;
+};
+
+class CSCUpdateSkill : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	char				m_nUpdateKind;
+	int					m_nSkillSeq;
+	int					m_nCode;
+	char				m_nEquipKind;
+	char				m_nLevel;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSEquipSkill : public CHeadPacket
+{ public:
+	int                 m_nSkillSeq;
+};
+
+class CSCEquipSkill : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	int					m_nSkillSeq;
+	char				m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSDivestSkill : public CHeadPacket
+{ public:
+	int                 m_nSkillSeq;
+};
+
+class CSCDivestSkill : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	int					m_nSkillSeq;
+	char				m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSBuySkill : public CHeadPacket
+{ public:
+	int                 m_nCode;
+	char                m_nBuyKind;
+	int                 m_nPrice;
+};
+
+class CSCBuySkill : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	CMoney              m_cMoney;
+	char                m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CShopTrainingData
+{ public:                 
+	int                 m_nCode;
+	char                m_nDiscount;
+};
+
+class CCSShopTrainingList : public CHeadPacket
+{ public:
+	short				m_nPage;
+};
+
+class CSCShopTrainingList : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	short				m_nCurrentPage;
+	short				m_nTotalPage;
+	CShopTrainingData	m_cShopTrainingData[LIST6_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSUpdateTraining : public CHeadPacket
+{ public:
+	int                 m_nPlayerSeq;
+};
+
+class CSCUpdateTraining : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	char				m_nUpdateKind;
+	int					m_nTrainingSeq;
+	int					m_nCode;
+	char				m_nLevel;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSBuyTraining : public CHeadPacket
+{ public:
+	int                 m_nCode;
+	char                m_nBuyKind;
+	int                 m_nPrice;
+};
+
+class CSCBuyTraining : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	CMoney              m_cMoney;
+	char                m_nEquipKind;
+	CFaculty			m_cTrainingFaculty;
+};
+//////////////////////////////////////////////////////////////////////////
+class CShopCeremonyData
+{ public:                 
+	int                 m_nCode;
+	char                m_nDiscount;
+};
+
+class CCSShopCeremonyList : public CHeadPacket
+{ public:
+	short				m_nPage;
+};
+
+class CSCShopCeremonyList : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	short				m_nCurrentPage;
+	short				m_nTotalPage;
+	CShopCeremonyData	m_cShopCeremonyData[LIST6_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSUpdateCeremony : public CHeadPacket
+{ public:
+	int                 m_nPlayerSeq;
+};
+
+class CSCUpdateCeremony : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	char				m_nUpdateKind;
+	int					m_nCeremonySeq;
+	int					m_nCode;
+	char				m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSEquipCeremony : public CHeadPacket
+{ public:
+	int                 m_nCeremonySeq;
+};
+
+class CSCEquipCeremony : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	int					m_nCeremonySeq;
+	char				m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSDivestCeremony : public CHeadPacket
+{ public:
+	int                 m_nCeremonySeq;
+};
+
+class CSCDivestCeremony : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	int					m_nCeremonySeq;
+	char				m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSBuyCeremony : public CHeadPacket
+{ public:
+	int                 m_nCode;
+	char                m_nBuyKind;
+	int                 m_nPrice;
+};
+
+class CSCBuyCeremony : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	CMoney              m_cMoney;
+	char                m_nEquipKind;
+};
+//////////////////////////////////////////////////////////////////////////
+class CQuestData
+{ public:                 
+	int                 m_nCode;
+};
+
+class CCSQuestList : public CHeadPacket
+{ public:
+	short				m_nPage;
+};
+
+class CSCQuestList : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	short				m_nCurrentPage;
+	short				m_nTotalPage;
+	CQuestData			m_cQuestData[LIST6_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSUpdateQuest : public CHeadPacket
+{ public:
+	int                 m_nPlayerSeq;
+};
+
+class CSCUpdateQuest : public CHeadPacket
+{ public:
+	char                m_nResponse;
+	char				m_nUpdateKind;
+	int					m_nQuestSeq;
+	int					m_nCode;
+	short				m_nAmount;
+	int					m_nPlayDate;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSCreateQuest : public CHeadPacket
+{ public:
+	char				m_nState;
+	char				m_nMode;
+	char				m_sTitle[TITLE_NAME_SIZE];
+	char				m_sPass[5];
+	int					m_nQuestCode;
+	char				m_nAttackCode;
+	char 				m_nScaleCode;
+	char				m_nAICode;
+	char 				m_nStartLevel;
+	char 				m_nEndLevel;
+	char 				m_nCheckClub;
+	char 				m_nCheckTime;
+	char 				m_nCheckWeather;
+	char 				m_nCheckView;
+	char 				m_nCheckViewChat;
+	char				m_nMaxCount;
+	char				m_nHomePosition[TEAM_SIZE];
+	char				m_nAwayPosition[TEAM_SIZE];
+};
+
+class CSCCreateQuest : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+
+// 5000번대
+//////////////////////////////////////////////////////////////////////////
+class CCSTCPPing : public CHeadPacket
+{ public:
+	char				m_nNone;
+};
+
+class CSCTCPPing : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSSendMessage : public CHeadPacket
+{ public:
+	char				m_nChatKind;
+	char				m_sToName[PLAYER_NAME_SIZE];
+	char				m_sMessage[MESSAGE_SIZE];
+};
+
+class CSCSendMessage : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+	char				m_nResponse;
+	char				m_nChatKind;
+	char				m_sFromName[PLAYER_NAME_SIZE];
+	char				m_sMessage[MESSAGE_SIZE];
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSRaiseFaculty : public CHeadPacket
+{ public:
+	CFaculty			m_cChangeFaculty;
+};
+
+class CSCRaiseFaculty : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CLevel				m_cLevel;
+	CFaculty			m_cRaiseFaculty;
+};
+//////////////////////////////////////////////////////////////////////////
+class CCSChangeSetting : public CHeadPacket
+{ public:
+	char				m_nInitSetting;
+	CSetting			m_cChangeSetting;
+};
+
+class CSCChangeSetting : public CHeadPacket
+{ public:
+	char				m_nResponse;
+	CSetting			m_cSetting;
+};
+//////////////////////////////////////////////////////////////////////////
+// UDP PROTOCOL 
+//////////////////////////////////////////////////////////////////////////
+class CCSUDPPunching : public CHeadPacket
+{ public:
+	int					m_nPlayerSeq;
+};
+//////////////////////////////////////////////////////////////////////////
+class CSCUDPPing : public CHeadPacket
+{ public:
+	char				m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+// 캐릭터 찾기 (CYG)
+class CCSCharacterSearch : public CHeadPacket
+{ public:
+	char m_sName[PLAYER_NAME_SIZE]; // 캐릭터명
+};
+
+class CSCCharacterSearch : public CHeadPacket
+{ public:
+	char m_nResponse; //결과
+	int  m_nPlayerSeq;//캐릭터 시퀀스
+};
+//////////////////////////////////////////////////////////////////////////
+// 아이템 전달 (소포시스템) (CYG)
+class CCSPostItem : public CHeadPacket
+{ public:
+	int m_nItemSeq; // 아이템 시퀀스
+	int	m_nPlayerSeq; // 사용자 시퀀스
+};
+
+class CSCPostItem : public CHeadPacket
+{ public:
+	char m_nResponse; // 결과값
+	int m_nItemSeq;   // 아이템시퀀스
+	CFaculty m_cItemFaculty; // 아이템능력치
+	int m_nEquipWear[MAX_EQUIP]; // 장착상태 명세서
+};
+//////////////////////////////////////////////////////////////////////////
+// 미션에 대한 보상을 한다. (CYG)
+class CCSMissionReward : public CHeadPacket
+{ public:
+	CMission m_cMission; // 보상할 미션내역
+};
+
+class CSCMissionReward : public CHeadPacket
+{ public:
+	char m_nResponse; // 결과값
+};
+//////////////////////////////////////////////////////////////////////////
+
+//--SOURCE_AUTO_INSERT_SCRIPT		
+
+//////////////////////////////////////////////////////////////////////////
+// STS 서버 로그인 (CYG)
+class CCSStsLogin : public CHeadPacket
+{ public:
+	short m_nServerCode;
+};
+
+class CSCStsLogin : public CHeadPacket
+{ public:
+	char m_nResponse;
+};
+//////////////////////////////////////////////////////////////////////////
+
+
+#ifdef	_WIN32
+	#pragma pack(pop)
+#else
+	#pragma pack(push,4)
+#endif
+
+#endif

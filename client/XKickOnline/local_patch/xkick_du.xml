@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<XUpdater>
+  <General LastVersion="1.0.2.47" Location="http://127.0.0.1:8787/">
+    <LastVersion>1.0.2.47</LastVersion>
+    <Location>http://127.0.0.1:8787/</Location>
+  </General>
+  <Files />
+</XUpdater>

@@ -1,0 +1,8 @@
+Code,Kind,Start,End
+0,Number,48,57
+1,EngUp,65,90
+2,EngLow,97,122
+3,JapHira,12353,12436
+4,JapKata,12448,12542
+5,Chinese,19968,40880
+6,Korean,44032,55203

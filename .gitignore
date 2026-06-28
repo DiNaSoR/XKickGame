@@ -1,0 +1,33 @@
+# Local environment and generated files
+.env
+*.log
+*.tmp
+Thumbs.db
+*.pyc
+__pycache__/
+
+# Legacy VCS metadata accidentally present in the imported snapshot
+.svn/
+
+# Runtime output. The runtime binaries/assets are tracked; logs and local backups are not.
+/server/runtime/legacy-home/Log/
+/server/runtime/logs/
+/client/XKickOnline/Crashed_Report/
+/client/XKickOnline/ScreenShot/
+/client/XKickOnline/Replay/
+/client/XKickOnline/*.png
+/client/XKickOnline/local_patch/*.log
+*.orig-*
+
+# Large legacy web download payloads kept in the working copy only.
+/web/admin/test/download/
+/web/admin/production/download/
+/client/installers/
+
+# Historical/generated local archives
+/archive/logs/
+/archive/packages/
+/archive/runtime-table-backups/
+
+# Native build products
+*.o

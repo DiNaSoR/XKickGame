@@ -1,0 +1,45 @@
+name: Bug report
+description: Report a reproducible client, server, database, or setup problem.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: List exact commands, client screens, or clicks.
+      placeholder: |
+        1. Run docker compose up --build
+        2. Start the client
+        3. Log in as test / 1234
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste relevant log snippets. Do not include private passwords.
+      render: text
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: Windows version, Docker Desktop version, client version
+    validations:
+      required: false

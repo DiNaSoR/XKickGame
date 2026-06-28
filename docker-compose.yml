@@ -1,0 +1,39 @@
+services:
+  mysql:
+    image: mysql:5.7
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --sql-mode=NO_ENGINE_SUBSTITUTION
+    environment:
+      MYSQL_ROOT_PASSWORD: ${XKICK_MYSQL_ROOT_PASSWORD:-xkick_root_dev_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - xkick-mysql-data:/var/lib/mysql
+      - ./server/runtime/mysql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p\"$${MYSQL_ROOT_PASSWORD}\""]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  runtime:
+    build:
+      context: ./server/runtime/docker
+    depends_on:
+      mysql:
+        condition: service_healthy
+    working_dir: /home/xkick
+    command: >
+      bash -lc "mkdir -p Log/DATABASE Log/PACKET Log/ERROR Log/OPERATE Log/NORMAL Log/SYSTEM certify game1 game2 game3
+      && chmod +x ./cmd
+      && ./cmd start
+      && tail -F /dev/null"
+    ports:
+      - "2001:2001/tcp"
+      - "2001:2001/udp"
+      - "3001:3001/tcp"
+      - "3001:3001/udp"
+    volumes:
+      - ./server/runtime/legacy-home:/home/xkick
+
+volumes:
+  xkick-mysql-data:

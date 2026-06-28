@@ -1,0 +1,33 @@
+Code,Situation
+100,always
+101,when winning
+102,when losing
+103,when in overtime
+104,2points or more lose in situations
+105,2points or more win in situations
+106,Tie in situations
+107,in the cross area
+108,in the long shots area
+109,in the short shots area
+110,in the middle area
+111,when the nomark
+112,in the our side area
+113,in the opponent's area
+114,in own position
+115,1 minute after start the match
+116,1 minute before end the match
+117,in counter attack
+118,in counter attack from the opponent
+119,2 or more at mark
+200,as often as make a goal
+201,as often as lose a goal
+202,as often as the shooting
+203,as often as the tacking
+204,as often as the stealing
+205,as often as the cutting
+206,as often as make a assist
+900,when winning
+901,when losing
+902,when select the player as the MVP 
+903,when in overtime
+904,once in a while
