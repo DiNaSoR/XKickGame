@@ -13,6 +13,15 @@ Runtime artifacts are intentionally included:
 
 The current server source snapshot is incomplete, so these artifacts are needed for local play and debugging.
 
+## Status Summary
+
+| Area | Run-ready status | Source/rebuild status | Notes |
+| --- | ---: | ---: | --- |
+| Server | 90% | 35% | Runnable through bundled legacy binaries, Docker, and MySQL seed data. Missing source files prevent a verified rebuild. |
+| Client | 95% | 45% | Windows runtime is included and configured. Legacy client source exists, but full rebuild instructions are not verified. |
+
+This means the public repository is ready for local runtime testing, not yet for fully source-built releases.
+
 ## Cleaned For Public Use
 
 - Private database passwords were replaced with public local-development defaults.

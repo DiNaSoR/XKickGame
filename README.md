@@ -6,6 +6,22 @@ This repository is prepared as a runtime-included public snapshot. The checked-i
 
 Arabic instructions are available in [README.ar.md](README.ar.md).
 
+## Project Status
+
+These percentages describe practical readiness for local development. They are not a claim that every legacy feature is complete.
+
+![Server Runtime](https://img.shields.io/badge/Server%20Runtime-90%25-success?style=for-the-badge)
+![Server Source](https://img.shields.io/badge/Server%20Source-35%25-orange?style=for-the-badge)
+![Client Runtime](https://img.shields.io/badge/Client%20Runtime-95%25-brightgreen?style=for-the-badge)
+![Client Source](https://img.shields.io/badge/Client%20Source-45%25-yellow?style=for-the-badge)
+
+| Area | Run-ready status | Source/rebuild status | Meaning |
+| --- | ---: | ---: | --- |
+| Server | 90% | 35% | The legacy server runtime, Docker wrapper, and MySQL bootstrap are included and documented. The recovered server source is incomplete, so the server currently runs from bundled legacy binaries. |
+| Client | 95% | 45% | The Windows client runtime is included with local config and an install-registration helper. The legacy client source exists, but a clean rebuild path is not verified. |
+
+In short: the repository is complete enough to run the local client/server stack, but it is not yet a fully rebuildable open-source codebase.
+
 ## What Is Included
 
 - `client/XKickOnline/` - Windows client runtime, launcher, DLLs, PAK files, and local client helper scripts.
